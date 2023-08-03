@@ -1,26 +1,25 @@
-module.exports = {
-  "env": {
-    "browser": true,
-    "es2021": true
+// @ts-check
+const { builtinModules } = require('node:module');
+const { defineConfig } = require('eslint-define-config');
+
+module.exports = defineConfig({
+  globals: {
+    module: true,
+    require: true,
+    process: true,
   },
-  "extends": [
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:import/typescript',
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "import",
-    "react-refresh"
+  plugins: [
+    'react',
+    'react-refresh',
+    'import',
   ],
-  "rules": {
+  rules: {
     eqeqeq: ['warn', 'always'],
     'no-console': 'warn',
     'no-debugger': 'warn',
@@ -35,6 +34,7 @@ module.exports = {
         destructuring: 'all',
       },
     ],
+    'object-shorthand': ['error', 'always'],
     'quote-props': ['error', 'as-needed', { keywords: false, unnecessary: true, numbers: false }],
     'no-array-constructor': 'error',
     'prefer-destructuring': ['error', {
@@ -277,4 +277,4 @@ module.exports = {
     }],
     'react/jsx-tag-spacing': ['error', { closingSlash: 'never', beforeSelfClosing: 'always', beforeClosing: 'never' }],
   },
-}
+});
