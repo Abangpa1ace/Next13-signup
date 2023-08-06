@@ -1,23 +1,20 @@
-import Header from "@components/shared/layout/Header";
+import MainLayout from "@/components/layouts/MainLayout";
 import { Metadata } from "next";
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 import RootStyleRegistry from "../lib/RootStyleRegistry";
 
 export const metadata: Metadata = {
-  title: '회원가입하기',
+  title: 'Next 13 과제',
 }
 
-interface Props {
-  children: ReactNode;
-}
-
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='ko'>
       <body>
         <RootStyleRegistry>
-          <Header />
-          {children}
+          <MainLayout>
+            {children}
+          </MainLayout>
         </RootStyleRegistry>
       </body>
     </html>
