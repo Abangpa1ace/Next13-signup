@@ -13,7 +13,7 @@ const HeaderContainer = styled.header`
   justify-content: center;
   align-items: center;
   padding: 24px;
-  background-color: #040435;
+  background-color: ${({ theme }) => theme.accent.primary};
   color: white;
   font-size: 24px;
   font-weight: 600;

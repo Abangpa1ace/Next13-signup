@@ -1,25 +1,23 @@
 "use client";
 
 import { SIGNUP_TITLE_MAP } from "@/constants/signup";
-import SignUpProvider, { SignUpContext } from "@/contexts/SignUpContext";
-import { PropsWithChildren, useContext } from "react";
+import useSignUpStep from "@/hooks/useSignUpStep";
+import { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 export default function SignUpLayout({ children }: PropsWithChildren) {
-  const { step } = useContext(SignUpContext);
+  const { step } = useSignUpStep();
   const isShowSafetyDescription = step === 'organization' || step === 'license';
 
   return (
-    <SignUpProvider>
-      <SignUpWrapper>
-        <Title>{SIGNUP_TITLE_MAP[step]}</Title>
-        {isShowSafetyDescription &&
-          <SafetyDescription>쓰리빌리언은 안전한 유전 검사 의뢰를 위해 가입 정보를 확인하고 있습니다.</SafetyDescription>}
-        <ContentWrapper>
-          {children}
-        </ContentWrapper>
-      </SignUpWrapper>
-    </SignUpProvider>
+    <SignUpWrapper>
+      <Title>{SIGNUP_TITLE_MAP[step]}</Title>
+      {isShowSafetyDescription &&
+        <SafetyDescription>쓰리빌리언은 안전한 유전 검사 의뢰를 위해 가입 정보를 확인하고 있습니다.</SafetyDescription>}
+      <ContentWrapper>
+        {children}
+      </ContentWrapper>
+    </SignUpWrapper>
   )
 }
 
