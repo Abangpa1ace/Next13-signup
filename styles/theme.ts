@@ -15,6 +15,9 @@ const defaultTheme: DefaultTheme = {
   },
   '3billion': {
     'blue-light-900': "#040435",
+  },
+  border: {
+    dark: '#bec2cc',
   }
 }
 

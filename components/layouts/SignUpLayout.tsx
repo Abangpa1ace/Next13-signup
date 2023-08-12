@@ -1,6 +1,6 @@
 "use client";
 
-import { SIGNUP_TITLE_MAP } from "@/constants/signup";
+import { signUpTitleMap } from "@/constants/signup";
 import useSignUpStep from "@/hooks/useSignUpStep";
 import { PropsWithChildren } from "react";
 import styled from "styled-components";
@@ -11,7 +11,7 @@ export default function SignUpLayout({ children }: PropsWithChildren) {
 
   return (
     <SignUpWrapper>
-      <Title>{SIGNUP_TITLE_MAP[step]}</Title>
+      <Title>{signUpTitleMap[step]}</Title>
       {isShowSafetyDescription &&
         <SafetyDescription>쓰리빌리언은 안전한 유전 검사 의뢰를 위해 가입 정보를 확인하고 있습니다.</SafetyDescription>}
       <ContentWrapper>

@@ -1,3 +1,4 @@
+
 import SignUpLayout from "@/components/layouts/SignUpLayout";
 import { Metadata } from "next";
 import { PropsWithChildren } from "react";

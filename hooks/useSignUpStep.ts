@@ -1,10 +1,10 @@
-import { SIGNUP_ORDER } from "@/constants/signup";
+import { signUpOrder } from "@/constants/signup";
 import { SignUpStep } from "@/types/signup";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const useSignUpStep = () => {
-  const [step, setStep] = useState<SignUpStep>(SIGNUP_ORDER[0]);
+  const [step, setStep] = useState<SignUpStep>(signUpOrder[0]);
   const pathname = usePathname()
   const router = useRouter();
 
@@ -15,10 +15,10 @@ const useSignUpStep = () => {
     setStep(step as SignUpStep)
   }, [pathname])
 
-  const nextStep = SIGNUP_ORDER[SIGNUP_ORDER.indexOf(step) + 1];
+  const nextStep = signUpOrder[signUpOrder.indexOf(step) + 1];
   const isLastStep = !nextStep;
 
-  const prevStep = SIGNUP_ORDER[SIGNUP_ORDER.indexOf(step) - 1];
+  const prevStep = signUpOrder[signUpOrder.indexOf(step) - 1];
   const isFirstStep = !prevStep;
 
   const routeNextStep = async () => {

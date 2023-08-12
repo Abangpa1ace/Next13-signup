@@ -1,6 +1,7 @@
+import OccupationContents from "@/components/signup/OccupationContents";
 
 export default function SignUpOccupationPage() {
   return (
-    <div>Occupation</div>
+    <OccupationContents />
   )
 }

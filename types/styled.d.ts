@@ -16,6 +16,9 @@ declare module "styled-components" {
     },
     '3billion': {
       'blue-light-900': string;
+    },
+    border: {
+      dark: string;
     }
   }
 }
