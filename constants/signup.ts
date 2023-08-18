@@ -29,3 +29,5 @@ export const occupationList: OccupationItem[] = [
     name: '행정 담당자',
   }
 ]
+
+export const occupationKeyList = ['doctor', 'nurse', 'researcher', 'administration'] as const;

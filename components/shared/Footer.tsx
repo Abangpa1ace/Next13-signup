@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 export default function Footer() {
   const { isFirstStep, isLastStep, routePrevStep, routeNextStep } = useSignUpStep();
-  console.log(isFirstStep, isLastStep);
+
   return (
     <FooterContainer>
       {!isFirstStep && <FooterButton onClick={routePrevStep}>이전</FooterButton>}

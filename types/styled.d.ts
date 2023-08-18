@@ -19,6 +19,9 @@ declare module "styled-components" {
     },
     border: {
       dark: string;
+    },
+    error: {
+      primary: string;
     }
   }
 }

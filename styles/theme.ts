@@ -18,6 +18,9 @@ const defaultTheme: DefaultTheme = {
   },
   border: {
     dark: '#bec2cc',
+  },
+  error: {
+    primary: '#ff142d',
   }
 }
 
