@@ -1,15 +1,22 @@
 "use client";
 
+import useValidatorForm from "@/hooks/shared/validator/useValidatorForm";
 import useSignUpStep from "@/hooks/useSignUpStep";
 import styled from "styled-components";
 
 export default function Footer() {
   const { isFirstStep, isLastStep, routePrevStep, routeNextStep } = useSignUpStep();
+  const { startValidate } = useValidatorForm();
+
+  const handleClickNext = () => {
+    startValidate();
+    // routeNextStep();
+  }
 
   return (
     <FooterContainer>
       {!isFirstStep && <FooterButton onClick={routePrevStep}>이전</FooterButton>}
-      {!isLastStep && <FooterButton onClick={routeNextStep}>다음</FooterButton>}
+      {!isLastStep && <FooterButton onClick={handleClickNext}>다음</FooterButton>}
     </FooterContainer>
   )
 }

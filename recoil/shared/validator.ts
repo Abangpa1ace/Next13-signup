@@ -1,9 +1,14 @@
 import { ValidatorCheckType, ValidatorKey } from "@/types/shared/validator";
-import { atomFamily, selectorFamily } from "recoil";
+import { atom, atomFamily, selectorFamily } from "recoil";
 
 export const validatorValueState = atomFamily<any, ValidatorKey>({
   key: 'validatorValueState',
   default: null,
+})
+
+export const validatorOnValidate = atom<boolean>({
+  key: 'validatorOnValidate',
+  default: false,
 })
 
 export const validatorCheckState = selectorFamily<ValidatorCheckType, ValidatorKey>({

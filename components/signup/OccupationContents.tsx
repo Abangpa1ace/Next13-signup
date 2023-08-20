@@ -8,7 +8,7 @@ import styled, { css } from "styled-components";
 import ErrorMessage from "../shared/form/ErrorMessage";
 
 const OccupationContents = () => {
-  const { value, setValue, isValid, invalidKey } = useValidatorField<OccupationKey>({ key: 'signup-occupation' });
+  const { value, setValue, isValid, invalidKey, onValidate } = useValidatorField<OccupationKey>({ key: 'signup-occupation' });
 
   const handleClickOccupation = (key: OccupationKey) => {
     setValue(prev => prev === key ? null : key);
@@ -21,7 +21,7 @@ const OccupationContents = () => {
           return <OccupationItem isSelected={value === key} onClick={() => handleClickOccupation(key)}>{name}</OccupationItem>;
         }))}
       </OccupationList>
-      <ErrorMessage isValid={isValid}>{invalidKey} 문제가 있군요..</ErrorMessage>
+      {onValidate && !isValid && <ErrorMessage>{invalidKey} 문제가 있군요..</ErrorMessage>}
     </>
   )
 }

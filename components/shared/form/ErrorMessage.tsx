@@ -2,12 +2,9 @@ import { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 interface Props {
-  isValid?: boolean;
 }
 
-const ErrorMessage = ({ children, isValid }: PropsWithChildren<Props>) => {
-  if (isValid) return null;
-  
+const ErrorMessage = ({ children }: PropsWithChildren<Props>) => {
   return (
     <Message>{children}</Message>
   )
