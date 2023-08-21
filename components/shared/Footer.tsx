@@ -2,13 +2,17 @@
 
 import useValidatorForm from "@/hooks/shared/validator/useValidatorForm";
 import useSignUpStep from "@/hooks/useSignUpStep";
+import { validatorValueIds } from "@/recoil/shared/validator";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 export default function Footer() {
   const { isFirstStep, isLastStep, routePrevStep, routeNextStep } = useSignUpStep();
   const { startValidate } = useValidatorForm();
+  const ids = useRecoilValue(validatorValueIds);
 
   const handleClickNext = () => {
+    console.log('ids', ids);
     startValidate();
     // routeNextStep();
   }

@@ -1,28 +1,27 @@
 "use client"
 
+import ValidatorFieldWrapper from "@/components/shared/form/ValidatorFieldWrapper";
 import { occupationList } from "@/constants/signup";
 import useValidatorField from "@/hooks/shared/validator/useValidatorField";
 import { OccupationKey } from "@/types/signup";
 import { Children } from "react";
 import styled, { css } from "styled-components";
-import ErrorMessage from "../shared/form/ErrorMessage";
 
 const OccupationContents = () => {
-  const { value, setValue, isValid, invalidKey, onValidate } = useValidatorField<OccupationKey>({ key: 'signup-occupation' });
+  const { value, setValue, fieldProps } = useValidatorField<OccupationKey>('signup-occupation');
 
   const handleClickOccupation = (key: OccupationKey) => {
     setValue(prev => prev === key ? null : key);
   }
 
   return (
-    <>
+    <ValidatorFieldWrapper {...fieldProps}>
       <OccupationList>
         {Children.toArray(occupationList.map(({ key, name }) => {
           return <OccupationItem isSelected={value === key} onClick={() => handleClickOccupation(key)}>{name}</OccupationItem>;
         }))}
       </OccupationList>
-      {onValidate && !isValid && <ErrorMessage>{invalidKey} 문제가 있군요..</ErrorMessage>}
-    </>
+    </ValidatorFieldWrapper>
   )
 }
 
