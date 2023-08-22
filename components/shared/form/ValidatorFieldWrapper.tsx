@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react"
 import styled from "styled-components"
 import ErrorMessage from "./ErrorMessage"
 
-const ValidatorFieldWrapper = ({ children, key, isValid, invalidMessage, onValidate }: PropsWithChildren<ValidatorFieldPropsType>) => {
+const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate }: PropsWithChildren<ValidatorFieldPropsType>) => {
   return (
     <Wrapper>
       {children}

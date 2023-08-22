@@ -8,7 +8,7 @@ import { Children } from "react";
 import styled, { css } from "styled-components";
 
 const OccupationContents = () => {
-  const { value, setValue, fieldProps } = useValidatorField<OccupationKey>('signup-occupation');
+  const { value, setValue, fieldProps } = useValidatorField<OccupationKey>('signup-occupation', { removeKeyOnUnmount: true });
 
   const handleClickOccupation = (key: OccupationKey) => {
     setValue(prev => prev === key ? null : key);

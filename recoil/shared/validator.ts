@@ -1,19 +1,19 @@
 import { ValidatorCheckType, ValidatorKey } from "@/types/shared/validator";
 import { validatorChecker } from "@/utils/shared/validator";
-import { atom, atomFamily, DefaultValue, selectorFamily } from "recoil";
+import { atom, atomFamily, selector, selectorFamily } from "recoil";
 
 export const validatorValueState = atomFamily<any, ValidatorKey>({
   key: 'validatorValueState',
   default: null,
 })
 
-export const validatorValueIds = atom<string[]>({
-  key: 'validatorValueIds',
+export const validatorFieldKeysState = atom<ValidatorKey[]>({
+  key: 'validatorFieldKeysState',
   default: [],
 })
 
-export const validatorOnValidate = atom<boolean>({
-  key: 'validatorOnValidate',
+export const validatorOnValidateState = atom<boolean>({
+  key: 'validatorOnValidateState',
   default: false,
 })
 
@@ -27,9 +27,18 @@ export const validatorCheckState = selectorFamily<ValidatorCheckType, ValidatorK
       isValid: !invalidMessage,
       invalidMessage,
     }
-  },
-  set: (id) => ({ set }, nextCheckState) => {
-    if (nextCheckState instanceof DefaultValue) return;
-    set(validatorValueIds, prev => [...prev, '1']);
+  }
+})
+
+export const validatorAllCheckState = selector({
+  key: 'validatorAllCheckState',
+  get: ({ get }) => {
+    const validatorFieldKeys = get(validatorFieldKeysState);
+    const invalidField = validatorFieldKeys.map(fieldKey => get(validatorCheckState(fieldKey))).find(validatorCheck => !validatorCheck.isValid);
+
+    return {
+      isAllValid: !invalidField,
+      invalidField,
+    }
   }
 })
