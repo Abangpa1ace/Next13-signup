@@ -7,4 +7,5 @@ const isOnlyCharDigit = (value) => !/^[0-9A-Za-z]+$/.test(value) && '영문과 �
 
 export const validatorChecker: Record<ValidatorKey, (value) => string | false> = {
   'signup-occupation': (value) => required(value),
+  'signup-organization': (value) => required(value)
 }

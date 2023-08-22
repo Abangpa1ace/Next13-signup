@@ -12,7 +12,6 @@ export default function Footer() {
   const keys = useRecoilValue(validatorFieldKeysState);
 
   const handleClickNext = () => {
-    console.log('keys', keys)
     if (!isAllValid) startValidate();
     else routeNextStep();
   }
@@ -20,7 +19,7 @@ export default function Footer() {
   return (
     <FooterContainer>
       {!isFirstStep && <FooterButton onClick={routePrevStep}>이전</FooterButton>}
-      {!isLastStep && <FooterButton onClick={handleClickNext}>다음</FooterButton>}
+      {!isLastStep && <FooterButton isPrimary onClick={handleClickNext}>다음</FooterButton>}
     </FooterContainer>
   )
 }
@@ -37,21 +36,13 @@ const FooterContainer = styled.footer`
   padding: 15px 10px 48px;
 `;
 
-const FooterButton = styled.button`
+const FooterButton = styled.button<{ isPrimary?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 304px;
   height: 48px;
+  background-color: ${({ isPrimary, theme }) => isPrimary ? theme["3billion"]["blue-light-900"] : theme.action.light};
+  color: ${({ isPrimary, theme }) => isPrimary ? theme.accent.contrast : theme.text.primary};
   border-radius: 51px;
-
-  &:nth-of-type(1) {
-    background-color: ${({ theme }) => theme.action.light};
-    color: ${({ theme }) => theme.text.primary};
-  }
-
-  &:nth-of-type(2) {
-    background-color: ${({ theme }) => theme["3billion"]["blue-light-900"]};
-    color: ${({ theme }) => theme.accent.contrast};
-  }
 `;

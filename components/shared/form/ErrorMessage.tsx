@@ -1,22 +1,18 @@
-import { PropsWithChildren } from "react";
+import { HTMLProps, PropsWithChildren } from "react";
 import styled from "styled-components";
 
-interface Props {
-  margin?: string;
-}
-
-const ErrorMessage = ({ children, margin }: PropsWithChildren<Props>) => {
+const ErrorMessage = ({ children, ...props }: PropsWithChildren<HTMLProps<HTMLParagraphElement>>) => {
   return (
-    <Message margin={margin}>{children}</Message>
+    <Message {...props}>{children}</Message>
   )
 }
 
 export default ErrorMessage;
 
-const Message = styled.p<Pick<Props, 'margin'>>`
-  margin: ${({ margin }) => margin || '2px 0 0'};
+const Message = styled.p`
+  margin-top: 4px;
   color: ${({ theme }) => theme.error.primary};
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
   font-weight: 400;
 `;

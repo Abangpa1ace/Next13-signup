@@ -1,5 +1,8 @@
+import { CSSProperties } from "react";
+
 export type ValidatorKey = 
   | 'signup-occupation'
+  | 'signup-organization'
 
 export interface ValidatorCheckType {
   isValid: boolean;
@@ -12,6 +15,7 @@ export interface ValidatorFieldPropsType extends ValidatorCheckType {
   // invalidMessage: string;
   validatorKey: ValidatorKey;
   onValidate: boolean;
+  errorMessageStyle?: CSSProperties;
 }
 
 export type ValidatorRule =

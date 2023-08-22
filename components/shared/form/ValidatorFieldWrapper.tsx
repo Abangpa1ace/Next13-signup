@@ -4,11 +4,11 @@ import { PropsWithChildren } from "react"
 import styled from "styled-components"
 import ErrorMessage from "./ErrorMessage"
 
-const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate }: PropsWithChildren<ValidatorFieldPropsType>) => {
+const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate, errorMessageStyle }: PropsWithChildren<ValidatorFieldPropsType>) => {
   return (
     <Wrapper>
       {children}
-      {onValidate && !isValid && <ErrorMessage>{invalidMessage}</ErrorMessage>}
+      {onValidate && !isValid && <ErrorMessage style={errorMessageStyle}>{invalidMessage}</ErrorMessage>}
     </Wrapper>
   )
 }
@@ -16,5 +16,5 @@ const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate }
 export default ValidatorFieldWrapper;
 
 const Wrapper = styled.div`
-
+  width: 100%;
 `;
