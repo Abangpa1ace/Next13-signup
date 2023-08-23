@@ -1,7 +1,7 @@
 import { HTMLProps } from "react";
 import styled from "styled-components";
 
-interface Props extends HTMLProps<HTMLInputElement> {
+export interface TextInputProps extends HTMLProps<HTMLInputElement> {
 }
 
 const TextInput = ({ ...props }) => {

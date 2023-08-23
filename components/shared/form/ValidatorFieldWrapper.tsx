@@ -4,11 +4,11 @@ import { PropsWithChildren } from "react"
 import styled from "styled-components"
 import ErrorMessage from "./ErrorMessage"
 
-const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate, errorMessageStyle }: PropsWithChildren<ValidatorFieldPropsType>) => {
+const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate }: PropsWithChildren<ValidatorFieldPropsType>) => {
   return (
     <Wrapper>
       {children}
-      {onValidate && !isValid && <ErrorMessage style={errorMessageStyle}>{invalidMessage}</ErrorMessage>}
+      {onValidate && !isValid && <ErrorMessage>{invalidMessage}</ErrorMessage>}
     </Wrapper>
   )
 }
