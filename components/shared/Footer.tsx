@@ -2,17 +2,17 @@
 
 import useValidatorForm from "@/hooks/shared/validator/useValidatorForm";
 import useSignUpStep from "@/hooks/useSignUpStep";
-import { validatorFieldKeysState } from "@/recoil/shared/validator";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 export default function Footer() {
-  const { isFirstStep, isLastStep, routePrevStep, routeNextStep } = useSignUpStep();
-  const { isAllValid, startValidate } = useValidatorForm();
-  const keys = useRecoilValue(validatorFieldKeysState);
+  const { isFirstStep, isLastStep, routePrevStep, routeNextStep, routeToStep } = useSignUpStep();
+  const { isAllValid, invalidField, startValidate } = useValidatorForm();
 
   const handleClickNext = () => {
-    if (!isAllValid) startValidate();
+    if (!isAllValid) {
+      routeToStep(invalidField?.invalidKey.split('-')[1]);
+      startValidate();
+    }
     else routeNextStep();
   }
 

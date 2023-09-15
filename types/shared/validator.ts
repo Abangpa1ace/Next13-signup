@@ -2,9 +2,12 @@
 export type ValidatorKey = 
   | 'signup-occupation'
   | 'signup-organization'
+  | 'signup-license'
+  | 'signup-email'
 
 export interface ValidatorCheckType {
   isValid: boolean;
+  invalidKey: ValidatorKey;
   invalidMessage: string;
 }
 

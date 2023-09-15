@@ -1,3 +1,5 @@
+"use client"
+
 import { validatorCheckState, validatorFieldKeysState, validatorOnValidateState, validatorValueState } from "@/recoil/shared/validator";
 import { ValidatorFieldPropsType, ValidatorKey } from "@/types/shared/validator";
 import { useEffect } from "react";
@@ -23,6 +25,11 @@ const useValidatorField = <T>(key: ValidatorKey, {
     onValidate,
   }
 
+  const handleChangeValue = (value: T | null) => {
+    setValue(value);
+    if (onValidate) setOnValidate(false);
+  }
+
   useEffect(() => {
     setFieldKeys(fieldKeys => fieldKeys.indexOf(key) === -1 ? [...fieldKeys, key] : fieldKeys);
 
@@ -31,15 +38,11 @@ const useValidatorField = <T>(key: ValidatorKey, {
     }
   }, []); 
 
-  useEffect(() => {
-    if (onValidate) setOnValidate(false);
-  }, [value]);
-
   return {
     value,
     ...validateCheck,
     onValidate,
-    setValue,
+    handleChangeValue,
     fieldProps,
   }
 }

@@ -1,6 +1,7 @@
+import LicenseContents from "@/components/signup/LicenseContents";
 
-export default function SignUpOccupationPage() {
+export default function SignUpLicensePage() {
   return (
-    <div>License</div>
+    <LicenseContents />
   )
 }

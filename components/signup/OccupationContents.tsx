@@ -1,6 +1,7 @@
 "use client"
 
-import ValidatorFieldWrapper from "@/components/shared/form/ValidatorFieldWrapper";
+
+import { ValidatorFieldWrapper } from "@/components/shared/form";
 import { occupationList } from "@/constants/signup";
 import useValidatorField from "@/hooks/shared/validator/useValidatorField";
 import { OccupationKey } from "@/types/signup";
@@ -8,18 +9,18 @@ import { Children } from "react";
 import styled, { css } from "styled-components";
 
 const OccupationContents = () => {
-  const { value, setValue, fieldProps } = useValidatorField<OccupationKey>('signup-occupation', { removeKeyOnUnmount: true });
+  const { value, handleChangeValue, fieldProps } = useValidatorField<OccupationKey>('signup-occupation', { removeKeyOnUnmount: true });
 
   const handleClickOccupation = (key: OccupationKey) => {
-    setValue(prev => prev === key ? null : key);
+    handleChangeValue(value === key ? null : key);
   }
 
   return (
     <ValidatorFieldWrapper {...fieldProps}>
       <OccupationList>
-        {Children.toArray(occupationList.map(({ key, name }) => {
-          return <OccupationItem isSelected={value === key} onClick={() => handleClickOccupation(key)}>{name}</OccupationItem>;
-        }))}
+        {Children.toArray(occupationList.map(({ key, name }) => 
+          <OccupationItem isSelected={value === key} onClick={() => handleClickOccupation(key)}>{name}</OccupationItem>
+        ))}
       </OccupationList>
     </ValidatorFieldWrapper>
   )

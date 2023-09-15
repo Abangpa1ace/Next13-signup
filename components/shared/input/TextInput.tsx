@@ -1,12 +1,18 @@
-import { HTMLProps } from "react";
+import { ChangeEvent, InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
-export interface TextInputProps extends HTMLProps<HTMLInputElement> {
+export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
+  value: string | number | undefined | null;
+  onChangeInput: (value: string) => void;
 }
 
-const TextInput = ({ ...props }) => {
+const TextInput = ({ value, onChangeInput, ...props }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangeInput(e.target.value);
+  };
+
   return (
-    <Input {...props} />
+    <Input {...props} value={value || ''} onChange={handleChange} />
   )
 };
 

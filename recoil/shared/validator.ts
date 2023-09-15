@@ -25,6 +25,7 @@ export const validatorCheckState = selectorFamily<ValidatorCheckType, ValidatorK
 
     return {
       isValid: !invalidMessage,
+      invalidKey: id,
       invalidMessage,
     }
   }

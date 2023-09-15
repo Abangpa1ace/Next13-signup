@@ -10,15 +10,19 @@ declare module "styled-components" {
     text: {
       primary: string;
       secondary: string;
+      disabled: string;
     },
     action: {
       light: string;
+      disabled: string;
     },
     '3billion': {
       'blue-light-900': string;
     },
     border: {
       dark: string;
+      light: string;
+      disabled: string;
     },
     error: {
       primary: string;
