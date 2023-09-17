@@ -21,8 +21,8 @@ const useValidatorField = <T>(key: ValidatorKey, {
 
   const fieldProps: ValidatorFieldPropsType = {
     validatorKey: key,
-    ...validateCheck,
     onValidate,
+    ...validateCheck, // isValid, invalidKey, invalidMessage
   }
 
   const handleChangeValue = (value: T | null) => {
@@ -42,8 +42,9 @@ const useValidatorField = <T>(key: ValidatorKey, {
     value,
     ...validateCheck,
     onValidate,
-    handleChangeValue,
     fieldProps,
+    handleChangeValue,
+    resetValue,
   }
 }
 

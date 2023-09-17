@@ -36,7 +36,6 @@ export const validatorAllCheckState = selector({
   get: ({ get }) => {
     const validatorFieldKeys = get(validatorFieldKeysState);
     const invalidField = validatorFieldKeys.map(fieldKey => get(validatorCheckState(fieldKey))).find(validatorCheck => !validatorCheck.isValid);
-
     return {
       isAllValid: !invalidField,
       invalidField,

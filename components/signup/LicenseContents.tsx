@@ -5,7 +5,7 @@ import { InputLayout, ValidatorFieldWrapper } from "../shared/form";
 import { TextInput } from "../shared/input";
 
 function LicenseContents() {
-  const { value, handleChangeValue, fieldProps } = useValidatorField<string>('signup-license', { removeKeyOnUnmount: true })
+  const { value, handleChangeValue, fieldProps } = useValidatorField<string>('signup-license')
 
   return (
     <InputLayout title="면허 번호">

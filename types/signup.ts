@@ -5,3 +5,7 @@ export interface OccupationItem {
   key: OccupationKey;
   name: string;
 }
+
+export interface CheckEmailResponse {
+  message: string;
+}

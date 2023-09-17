@@ -5,7 +5,7 @@ import { InputLayout, ValidatorFieldWrapper } from "../shared/form";
 import { EmailInput } from "../shared/input";
 
 function EmailContents() {
-  const { value, handleChangeValue, fieldProps } = useValidatorField<string>('signup-email', { removeKeyOnUnmount: true });
+  const { value, handleChangeValue, fieldProps } = useValidatorField<string>('signup-email');
 
   return (
     <InputLayout title="이메일 계정">

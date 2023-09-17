@@ -5,6 +5,7 @@ const useValidatorForm = () => {
   const [onValidate, setOnValidate] = useRecoilState(validatorOnValidateState);
   const allValidateCheck = useRecoilValue(validatorAllCheckState);
 
+
   return {
     onValidate,
     ...allValidateCheck,

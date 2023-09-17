@@ -11,10 +11,11 @@ export interface ValidatorCheckType {
   invalidMessage: string;
 }
 
+export interface ValidatorFieldType<T> extends ValidatorCheckType {
+  value: T | null;
+}
+
 export interface ValidatorFieldPropsType extends ValidatorCheckType {
-  // ValidatorCheckType
-  // isValid: boolean;
-  // invalidMessage: string;
   validatorKey: ValidatorKey;
   onValidate: boolean;
 }

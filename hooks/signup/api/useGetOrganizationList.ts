@@ -1,19 +1,18 @@
-import { axiosFileInstance } from "@/api/axiosInstance";
+import { axiosFileInstance } from "@/api/axios";
 import { useQuery } from "react-query";
 
 const fetch = async () => {
-  const res = await axiosFileInstance.get('/organization.txt');
-  return res;
+  return await axiosFileInstance.get<string>('/organization.txt');
 }
 
 const useGetOrganizationList = () => {
   const { data, ...query } = useQuery(['organization-list'], fetch, {
     staleTime: Infinity,
-    select: res => res.data.split('\n'),
+    select: res => res?.data?.split('\n'),
   })
 
   return {
-    data,
+    data: data || [],
     ...query,
   }
 }

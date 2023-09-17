@@ -9,7 +9,7 @@ import { useDeferredValue, useMemo } from "react";
 
 function OrganizationContents() {
   const { value: occupationValue } = useValidatorField<OccupationKey>('signup-occupation');
-  const { value, handleChangeValue, fieldProps } = useValidatorField<string>('signup-organization', { removeKeyOnUnmount: true });
+  const { value, handleChangeValue, fieldProps } = useValidatorField<string>('signup-organization');
   const { data: organizationList } = useGetOrganizationList();
 
   const searchList = useMemo(() => {
