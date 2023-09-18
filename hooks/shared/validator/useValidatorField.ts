@@ -1,9 +1,10 @@
 "use client"
 
-import { validatorCheckState, validatorFieldKeysState, validatorOnValidateState, validatorValueState } from "@/recoil/shared/validator";
-import { ValidatorFieldPropsType, ValidatorKey } from "@/types/shared/validator";
-import { useEffect } from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { validatorFieldDataState, validatorFieldKeysState, validatorOnValidateState } from "@/recoil/shared/validator";
+import { ValidatorFieldData, ValidatorFieldProps, ValidatorKey } from "@/types/shared/validator";
+import { validatorChecker } from "@/utils/shared/validator";
+import { useEffect, useMemo } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 interface Options {
   removeKeyOnUnmount?: boolean;
@@ -12,22 +13,37 @@ interface Options {
 const useValidatorField = <T>(key: ValidatorKey, {
   removeKeyOnUnmount = false
 }: Options = {}) => {
-  
   const setFieldKeys = useSetRecoilState(validatorFieldKeysState);
   const [onValidate, setOnValidate] = useRecoilState(validatorOnValidateState);
-  const [value, setValue] = useRecoilState<T | null>(validatorValueState(key));
-  const resetValue = useResetRecoilState(validatorValueState(key));
-  const validateCheck = useRecoilValue(validatorCheckState(key));
+  // fieldData: key, value, isValid, invalidMessage
+  const [fieldData, setFieldData] = useRecoilState<ValidatorFieldData<T>>(validatorFieldDataState(key));
 
-  const fieldProps: ValidatorFieldPropsType = {
-    validatorKey: key,
+  const fieldProps: ValidatorFieldProps<T> = useMemo(() => ({
+    ...fieldData,
     onValidate,
-    ...validateCheck, // isValid, invalidKey, invalidMessage
-  }
+  }), [fieldData, onValidate]);
 
   const handleChangeValue = (value: T | null) => {
-    setValue(value);
+    const invalidMessage = validatorChecker[key](value) || '';
+    
+    setFieldData((field) => ({
+      ...field,
+      value,
+      isValid: !invalidMessage,
+      invalidMessage,
+    }))
+    
     if (onValidate) setOnValidate(false);
+  }
+
+  const handleChangeCustomError = (isValid: boolean, invalidMessage?: string) => {
+    setFieldData((field) => ({
+      ...field,
+      isValid, 
+      invalidMessage,
+    }))
+
+    setOnValidate(true);
   }
 
   useEffect(() => {
@@ -39,12 +55,11 @@ const useValidatorField = <T>(key: ValidatorKey, {
   }, []); 
 
   return {
-    value,
-    ...validateCheck,
+    ...fieldData,
     onValidate,
     fieldProps,
     handleChangeValue,
-    resetValue,
+    handleChangeCustomError,
   }
 }
 

@@ -11,4 +11,5 @@ export const validatorChecker: Record<ValidatorKey, (value) => string | false> =
   'signup-organization': (value) => required(value),
   'signup-license': (value) => required(value) || minLength(value, 5) || isOnlyCharDigit(value),
   'signup-email': (value) => required(value) || isEmail(value),
+  'signup-password': (value) => required(value),
 }

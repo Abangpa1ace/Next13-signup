@@ -1,9 +1,9 @@
-import { validatorAllCheckState, validatorOnValidateState } from "@/recoil/shared/validator";
+import { validatorAllValidState, validatorOnValidateState } from "@/recoil/shared/validator";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 const useValidatorForm = () => {
   const [onValidate, setOnValidate] = useRecoilState(validatorOnValidateState);
-  const allValidateCheck = useRecoilValue(validatorAllCheckState);
+  const allValidateCheck = useRecoilValue(validatorAllValidState);
 
 
   return {

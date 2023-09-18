@@ -19,7 +19,7 @@ const OccupationContents = () => {
     <ValidatorFieldWrapper {...fieldProps}>
       <OccupationList>
         {Children.toArray(occupationList.map(({ key, name }) => 
-          <OccupationItem isSelected={value === key} onClick={() => handleClickOccupation(key)}>{name}</OccupationItem>
+          <OccupationItem selected={value === key} onClick={() => handleClickOccupation(key)}>{name}</OccupationItem>
         ))}
       </OccupationList>
     </ValidatorFieldWrapper>
@@ -34,7 +34,7 @@ const OccupationList = styled.ul`
   gap: 12px 16px;
 `;
 
-const OccupationItem = styled.li<{ isSelected: boolean }>`
+const OccupationItem = styled.li<{ selected: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,7 +46,7 @@ const OccupationItem = styled.li<{ isSelected: boolean }>`
   border-radius: 8px;
   cursor: pointer;
 
-  ${({ isSelected }) => isSelected && css`
+  ${({ selected }) => selected && css`
     border: ${({ theme }) => `2px solid ${theme.accent.primary}`};
     background-color: ${({ theme }) => theme.accent.background};
   `};

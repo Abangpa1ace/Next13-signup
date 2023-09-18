@@ -1,34 +1,48 @@
 import usePostCheckEmailDuplication from "@/hooks/signup/api/usePostCheckEmailDuplication";
 import { ApiError } from "@/types/shared/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BaseButton from "../button/BaseButton";
 import TextInput, { TextInputProps } from "./TextInput";
 
-interface Props extends TextInputProps { };
+interface Props extends TextInputProps {
+  isValid: boolean;
+  invalidMessage?: string;
+  setCustomError: (isValid: boolean, invalidMessage?: string) => void;
+};
 
-function EmailInput({ ...inputProps }: Props) {
+function EmailInput({ isValid, invalidMessage, setCustomError, ...inputProps }: Props) {
   const { value } = inputProps;
-  const [emailError, setEmailError] = useState<string>('');
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
+
+  const handleSuccessVerify = () => setIsValidEmail(true);
 
   const handleErrorVerify = (error: ApiError) => {
     const { statusCode, message } = error?.response?.data || { statusCode: 0, message: '' };
 
-    if (statusCode !== 409) return;
-    setEmailError(message);
+    setCustomError(false, statusCode === 409 ? message : '예상치 못한 에러가 발생했습니다.')
   }
 
   const { mutate } = usePostCheckEmailDuplication({
+    onSuccess: handleSuccessVerify,
     onError: handleErrorVerify,
   });
 
-  const verifyEmail = () => mutate(String(value));
+  const verifyEmail = () => {
+    if (!isValid && !!invalidMessage) {
+      setCustomError(false, invalidMessage);
+    }
+    else mutate(String(value));
+  }
+
+  useEffect(() => {
+    setIsValidEmail(false);
+  }, [value]);
 
   return (
     <Wrapper>
       <TextInput {...inputProps} />
-      <BaseButton disabled={!!emailError} onClick={verifyEmail}>중복 확인</BaseButton>
-      {emailError && <p>{emailError}</p>}
+      <BaseButton disabled={!!isValidEmail} onClick={verifyEmail}>중복 확인</BaseButton>
     </Wrapper>
   )
 }

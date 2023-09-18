@@ -6,11 +6,11 @@ import styled from "styled-components";
 
 export default function Footer() {
   const { isFirstStep, isLastStep, routePrevStep, routeNextStep, routeToStep } = useSignUpStep();
-  const { isAllValid, invalidField, startValidate } = useValidatorForm();
+  const { isAllValid, firstInvalidField, startValidate, onValidate } = useValidatorForm();
 
   const handleClickNext = () => {
     if (!isAllValid) {
-      routeToStep(invalidField?.invalidKey.split('-')[1]);
+      routeToStep(firstInvalidField?.key.split('-')[1]);
       startValidate();
     }
     else routeNextStep();
@@ -19,7 +19,7 @@ export default function Footer() {
   return (
     <FooterContainer>
       {!isFirstStep && <FooterButton onClick={routePrevStep}>이전</FooterButton>}
-      {!isLastStep && <FooterButton isPrimary onClick={handleClickNext}>다음</FooterButton>}
+      {!isLastStep && <FooterButton primary onClick={handleClickNext}>다음</FooterButton>}
     </FooterContainer>
   )
 }
@@ -36,13 +36,13 @@ const FooterContainer = styled.footer`
   padding: 15px 10px 48px;
 `;
 
-const FooterButton = styled.button<{ isPrimary?: boolean }>`
+const FooterButton = styled.button<{ primary?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 304px;
   height: 48px;
-  background-color: ${({ isPrimary, theme }) => isPrimary ? theme["3billion"]["blue-light-900"] : theme.action.light};
-  color: ${({ isPrimary, theme }) => isPrimary ? theme.accent.contrast : theme.text.primary};
+  background-color: ${({ primary, theme }) => primary ? theme["3billion"]["blue-light-900"] : theme.action.light};
+  color: ${({ primary, theme }) => primary ? theme.accent.contrast : theme.text.primary};
   border-radius: 51px;
 `;

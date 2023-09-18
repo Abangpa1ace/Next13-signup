@@ -4,23 +4,21 @@ export type ValidatorKey =
   | 'signup-organization'
   | 'signup-license'
   | 'signup-email'
+  | 'signup-password'
 
-export interface ValidatorCheckType {
-  isValid: boolean;
-  invalidKey: ValidatorKey;
-  invalidMessage: string;
-}
-
-export interface ValidatorFieldType<T> extends ValidatorCheckType {
+export interface ValidatorFieldData<T> {
+  key: ValidatorKey;
   value: T | null;
+  isValid: boolean;
+  invalidMessage?: string;
 }
 
-export interface ValidatorFieldPropsType extends ValidatorCheckType {
-  validatorKey: ValidatorKey;
+export interface ValidatorFieldProps<T> extends ValidatorFieldData<T> {
   onValidate: boolean;
 }
 
-export type ValidatorRule =
-  | 'required'
-  | 'minLength'
-  | 'isEnglish'
+export interface ValidatorAllValid {
+  isAllValid: boolean;
+  invalidFields: ValidatorFieldData<any>[];
+  firstInvalidField: ValidatorFieldData<any>;
+}

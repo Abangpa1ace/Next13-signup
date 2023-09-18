@@ -1,10 +1,10 @@
 
-import { ValidatorFieldPropsType } from "@/types/shared/validator"
+import { ValidatorFieldProps } from "@/types/shared/validator"
 import { PropsWithChildren } from "react"
 import styled from "styled-components"
 import ErrorMessage from "./ErrorMessage"
 
-const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate }: PropsWithChildren<ValidatorFieldPropsType>) => {
+const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate }: PropsWithChildren<ValidatorFieldProps>) => {
   return (
     <Wrapper>
       {children}

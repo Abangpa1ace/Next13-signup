@@ -1,10 +1,14 @@
-import { ValidatorCheckType, ValidatorKey } from "@/types/shared/validator";
-import { validatorChecker } from "@/utils/shared/validator";
-import { atom, atomFamily, selector, selectorFamily } from "recoil";
+import { ValidatorAllValid, ValidatorFieldData, ValidatorKey } from "@/types/shared/validator";
+import { atom, atomFamily, selector } from "recoil";
 
-export const validatorValueState = atomFamily<any, ValidatorKey>({
-  key: 'validatorValueState',
-  default: null,
+export const validatorFieldDataState = atomFamily<ValidatorFieldData<any>, ValidatorKey>({
+  key: 'validatorFieldDataState',
+  default: (key) => ({
+    key,
+    value: null,
+    isValid: false,
+    invalidMessage: '',
+  })
 })
 
 export const validatorFieldKeysState = atom<ValidatorKey[]>({
@@ -17,28 +21,24 @@ export const validatorOnValidateState = atom<boolean>({
   default: false,
 })
 
-export const validatorCheckState = selectorFamily<ValidatorCheckType, ValidatorKey>({
-  key: 'validatorCheckState',
-  get: (id) => ({ get }) => {
-    const value = get(validatorValueState(id));
-    const invalidMessage = validatorChecker[id](value) || '';
+export const validatorAllValidState = selector<ValidatorAllValid>({
+  key: 'validatorAllValidState',
+  get: ({ get }) => {
+    const validatorFieldKeys = get(validatorFieldKeysState);
+    const invalidFields = validatorFieldKeys.map(fieldKey => get(validatorFieldDataState(fieldKey))).filter(fieldData => !fieldData.isValid);
 
     return {
-      isValid: !invalidMessage,
-      invalidKey: id,
-      invalidMessage,
+      isAllValid: !invalidFields.length,
+      invalidFields,
+      firstInvalidField: invalidFields[0],
     }
   }
 })
 
-export const validatorAllCheckState = selector({
-  key: 'validatorAllCheckState',
+export const validatorAllFieldDataState = selector<ValidatorFieldData<any>[]>({
+  key: 'validatorAllFieldDataState',
   get: ({ get }) => {
     const validatorFieldKeys = get(validatorFieldKeysState);
-    const invalidField = validatorFieldKeys.map(fieldKey => get(validatorCheckState(fieldKey))).find(validatorCheck => !validatorCheck.isValid);
-    return {
-      isAllValid: !invalidField,
-      invalidField,
-    }
+    return validatorFieldKeys.map(fieldKey => get(validatorFieldDataState(fieldKey)));
   }
 })
