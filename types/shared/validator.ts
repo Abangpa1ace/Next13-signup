@@ -13,7 +13,9 @@ export interface ValidatorFieldData<T> {
   invalidMessage?: string;
 }
 
-export interface ValidatorFieldProps<T> extends ValidatorFieldData<T> {
+export interface ValidatorFieldProps {
+  isValid: boolean;
+  invalidMessage?: string;
   onValidate: boolean;
 }
 
@@ -22,3 +24,5 @@ export interface ValidatorAllValid {
   invalidFields: ValidatorFieldData<any>[];
   firstInvalidField: ValidatorFieldData<any>;
 }
+
+export type ValidatorChangeCustomError = (isValid: boolean, invalidMessage?: string, isPrior?: boolean, triggerValidate?: boolean) => void;

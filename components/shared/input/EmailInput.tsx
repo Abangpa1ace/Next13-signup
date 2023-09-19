@@ -1,5 +1,6 @@
 import usePostCheckEmailDuplication from "@/hooks/signup/api/usePostCheckEmailDuplication";
 import { ApiError } from "@/types/shared/axios";
+import { ValidatorChangeCustomError } from "@/types/shared/validator";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BaseButton from "../button/BaseButton";
@@ -8,7 +9,7 @@ import TextInput, { TextInputProps } from "./TextInput";
 interface Props extends TextInputProps {
   isValid: boolean;
   invalidMessage?: string;
-  setCustomError: (isValid: boolean, invalidMessage?: string) => void;
+  setCustomError: ValidatorChangeCustomError;
 };
 
 function EmailInput({ isValid, invalidMessage, setCustomError, ...inputProps }: Props) {
@@ -29,7 +30,7 @@ function EmailInput({ isValid, invalidMessage, setCustomError, ...inputProps }: 
   });
 
   const verifyEmail = () => {
-    if (!isValid && !!invalidMessage) {
+    if (!isValid) {
       setCustomError(false, invalidMessage);
     }
     else mutate(String(value));

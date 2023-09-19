@@ -6,7 +6,7 @@ import { EmailInput } from "../shared/input";
 
 function EmailContents() {
   const { value, isValid, invalidMessage, handleChangeValue, handleChangeCustomError, fieldProps } = useValidatorField<string>('signup-email');
-  console.log(fieldProps);
+
   return (
     <InputLayout title="이메일 계정">
       <ValidatorFieldWrapper {...fieldProps}>

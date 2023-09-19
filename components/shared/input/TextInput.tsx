@@ -1,20 +1,20 @@
-import { ChangeEvent, InputHTMLAttributes } from "react";
+import { ChangeEvent, forwardRef, InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
-  value: string | number | undefined | null;
-  onChangeInput: (value: string) => void;
+  value?: string | number | undefined | null;
+  onChangeInput?: (value: string) => void;
 }
 
-const TextInput = ({ value, onChangeInput, ...props }) => {
+const TextInput = forwardRef<HTMLInputElement, TextInputProps>(({ value, onChangeInput, ...props }, ref) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChangeInput(e.target.value);
+    onChangeInput?.(e.target.value);
   };
 
   return (
-    <Input {...props} value={value || ''} onChange={handleChange} />
+    <Input {...props} value={value || ''} onChange={handleChange} ref={ref} />
   )
-};
+});
 
 export default TextInput;
 

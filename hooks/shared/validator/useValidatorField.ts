@@ -1,7 +1,7 @@
 "use client"
 
 import { validatorFieldDataState, validatorFieldKeysState, validatorOnValidateState } from "@/recoil/shared/validator";
-import { ValidatorFieldData, ValidatorFieldProps, ValidatorKey } from "@/types/shared/validator";
+import { ValidatorChangeCustomError, ValidatorFieldData, ValidatorFieldProps, ValidatorKey } from "@/types/shared/validator";
 import { validatorChecker } from "@/utils/shared/validator";
 import { useEffect, useMemo } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -18,7 +18,7 @@ const useValidatorField = <T>(key: ValidatorKey, {
   // fieldData: key, value, isValid, invalidMessage
   const [fieldData, setFieldData] = useRecoilState<ValidatorFieldData<T>>(validatorFieldDataState(key));
 
-  const fieldProps: ValidatorFieldProps<T> = useMemo(() => ({
+  const fieldProps: ValidatorFieldProps = useMemo(() => ({
     ...fieldData,
     onValidate,
   }), [fieldData, onValidate]);
@@ -36,14 +36,18 @@ const useValidatorField = <T>(key: ValidatorKey, {
     if (onValidate) setOnValidate(false);
   }
 
-  const handleChangeCustomError = (isValid: boolean, invalidMessage?: string) => {
-    setFieldData((field) => ({
-      ...field,
-      isValid, 
-      invalidMessage,
-    }))
+  const handleChangeCustomError: ValidatorChangeCustomError = (isValid, invalidMessage, isPrior = true, triggerValidate = true) => {
+    if (isPrior ? isValid : fieldData.isValid) return;  // isValid가 유효하면 미적용
 
-    setOnValidate(true);
+    if (isPrior) {
+      setFieldData((field) => ({
+        ...field,
+        isValid, 
+        invalidMessage,
+      }))
+    }
+
+    if (triggerValidate) setOnValidate(true);
   }
 
   useEffect(() => {

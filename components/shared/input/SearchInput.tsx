@@ -1,9 +1,9 @@
 "use client"
 
 import { ClickOutside } from "@/components/shared/tools";
-import Image from "next/image";
 import { Children, useState } from "react";
 import styled from "styled-components";
+import { IconSearch } from "../icons";
 import TextInput, { TextInputProps } from "./TextInput";
 
 export interface SearchOptionItem<T = string> {
@@ -20,7 +20,7 @@ function SearchInput<T>({ searchList = [], onChangeOption, onChangeInput, ...inp
   const [isShowSearchList, setIsShowSearchList] = useState<boolean>(false);
 
   const handleChangeInput = (value) => {
-    onChangeInput(value);
+    onChangeInput?.(value);
     if(!isShowSearchList) setIsShowSearchList(true);
   }
 
@@ -31,7 +31,7 @@ function SearchInput<T>({ searchList = [], onChangeOption, onChangeInput, ...inp
 
   return (
     <Wrapper>
-      <SearchIcon src="/icon-search.svg" alt="icon_search" width={14} height={14} />
+      <IconSearch />
       <TextInput
         onChangeInput={handleChangeInput}
         {...inputProps}
@@ -56,13 +56,13 @@ export default SearchInput;
 
 const Wrapper = styled.div`
   position: relative;
-`;
 
-const SearchIcon = styled(Image)`
-  position: absolute;
-  left: 20px;
-  top: 24px;
-  transform: translateY(-50%);
+  > svg {
+    position: absolute;
+    left: 20px;
+    top: 24px;
+    transform: translateY(-50%);
+  }
 `;
 
 const SearchList = styled.ul`

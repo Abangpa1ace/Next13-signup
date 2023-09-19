@@ -30,6 +30,7 @@
     "strictNullChecks": true
   },
   "include": [
+    ".next/types/**/*.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

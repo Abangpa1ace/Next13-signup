@@ -1,21 +1,18 @@
 "use client";
 
 import useValidatorField from "@/hooks/shared/validator/useValidatorField";
-import { InputLayout, ValidatorFieldWrapper } from "../shared/form";
-import PasswordInput from "../shared/input/PasswordInput";
+import PasswordInputWithConfirm from "../shared/input/PasswordInputWithConfirm";
 
 const PasswordContents = () => {
-  const { value, handleChangeValue, fieldProps } = useValidatorField<string>('signup-password');
-
+  const { value, handleChangeValue, handleChangeCustomError, fieldProps } = useValidatorField<string>('signup-password');
+  console.log(fieldProps);
   return (
-    <ValidatorFieldWrapper {...fieldProps} >
-      <InputLayout title="비밀번호">
-        <PasswordInput value={value} onChangeInput={handleChangeValue} />
-      </InputLayout>
-      <InputLayout title="비밀번호 확인">
-        <PasswordInput value={null} onChangeInput={handleChangeValue} />
-      </InputLayout>
-    </ValidatorFieldWrapper>
+    <PasswordInputWithConfirm
+      value={value}
+      onChangeInput={handleChangeValue}
+      setCustomError={handleChangeCustomError}
+      {...fieldProps}
+    />
   )
 }
 

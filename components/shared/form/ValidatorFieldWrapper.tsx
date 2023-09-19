@@ -8,7 +8,7 @@ const ValidatorFieldWrapper = ({ children, isValid, invalidMessage, onValidate }
   return (
     <Wrapper>
       {children}
-      {onValidate && !isValid && <ErrorMessage>{invalidMessage}</ErrorMessage>}
+      {(onValidate && !isValid) && <ErrorMessage>{invalidMessage ?? ''}</ErrorMessage>}
     </Wrapper>
   )
 }
