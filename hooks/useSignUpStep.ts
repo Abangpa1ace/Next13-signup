@@ -1,16 +1,16 @@
-import { signUpOrder } from "@/constants/signup";
+import { signUpOrderList } from "@/constants/signup";
 import { OccupationKey, SignUpStep } from "@/types/signup";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useValidatorField from "./shared/validator/useValidatorField";
 
 const useSignUpStep = () => {
-  const [step, setStep] = useState<SignUpStep>(signUpOrder[0]);
+  const [step, setStep] = useState<SignUpStep>(signUpOrderList[0]);
   const pathname = usePathname()
   const router = useRouter();
   const { value: occupationValue } = useValidatorField<OccupationKey>('signup-occupation');
 
-  const signUpOrderList = occupationValue === 'researcher' || occupationValue === 'administration' ? signUpOrder.filter(order => order !== 'license') : signUpOrder;
+  const activeOrderList = occupationValue === 'researcher' || occupationValue === 'administration' ? signUpOrderList.filter(order => order !== 'license') : signUpOrderList;
 
   useEffect(() => {
     const paths = pathname.split('/');
@@ -19,10 +19,11 @@ const useSignUpStep = () => {
     setStep(step as SignUpStep)
   }, [pathname])
 
-  const nextStep = signUpOrderList[signUpOrderList.indexOf(step) + 1];
+  const nextStep = activeOrderList[activeOrderList.indexOf(step) + 1];
   const isLastStep = !nextStep;
+  const isRightBeforeLastStep = !activeOrderList[activeOrderList.indexOf(step) + 2];
 
-  const prevStep = signUpOrderList[signUpOrderList.indexOf(step) - 1];
+  const prevStep = activeOrderList[activeOrderList.indexOf(step) - 1];
   const isFirstStep = !prevStep;
 
   const routeNextStep = async () => {
@@ -36,7 +37,10 @@ const useSignUpStep = () => {
   }
 
   const routeToStep = async (step?: string) => {
-    if (!signUpOrderList.includes(step as SignUpStep)) await router.push(`/signup/${signUpOrder[0]}`);
+    if (!activeOrderList.includes(step as SignUpStep)) {
+      await router.push(`/signup/${activeOrderList[0]}`);
+      throw new Error('not exist step!');
+    }
     else await router.push(`/signup/${step}`);
   }
 
@@ -44,6 +48,7 @@ const useSignUpStep = () => {
     step,
     nextStep,
     isLastStep,
+    isRightBeforeLastStep,
     prevStep,
     isFirstStep,
     routeNextStep,

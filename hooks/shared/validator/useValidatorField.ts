@@ -36,16 +36,12 @@ const useValidatorField = <T>(key: ValidatorKey, {
     if (onValidate) setOnValidate(false);
   }
 
-  const handleChangeCustomError: ValidatorChangeCustomError = (isValid, invalidMessage, isPrior = true, triggerValidate = true) => {
-    if (isPrior ? isValid : fieldData.isValid) return;  // isValid가 유효하면 미적용
-
-    if (isPrior) {
-      setFieldData((field) => ({
-        ...field,
-        isValid, 
-        invalidMessage,
-      }))
-    }
+  const handleChangeCustomError: ValidatorChangeCustomError = (isValid, invalidMessage, triggerValidate = true) => {
+    setFieldData((field) => ({
+      ...field,
+      isValid, 
+      invalidMessage,
+    }))
 
     if (triggerValidate) setOnValidate(true);
   }

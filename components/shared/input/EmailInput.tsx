@@ -24,12 +24,13 @@ function EmailInput({ isValid, invalidMessage, setCustomError, ...inputProps }: 
     setCustomError(false, statusCode === 409 ? message : '예상치 못한 에러가 발생했습니다.')
   }
 
-  const { mutate } = usePostCheckEmailDuplication({
+  const { isLoading, mutate } = usePostCheckEmailDuplication({
     onSuccess: handleSuccessVerify,
     onError: handleErrorVerify,
   });
 
   const verifyEmail = () => {
+    if (isLoading) return;
     if (!isValid) {
       setCustomError(false, invalidMessage);
     }
@@ -43,7 +44,7 @@ function EmailInput({ isValid, invalidMessage, setCustomError, ...inputProps }: 
   return (
     <Wrapper>
       <TextInput {...inputProps} />
-      <BaseButton disabled={!!isValidEmail} onClick={verifyEmail}>중복 확인</BaseButton>
+      <BaseButton disabled={!!isValidEmail} onClick={verifyEmail}>{isLoading ? '로딩중' : '중복 확인'}</BaseButton>
     </Wrapper>
   )
 }

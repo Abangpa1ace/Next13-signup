@@ -5,16 +5,23 @@ import useSignUpStep from "@/hooks/useSignUpStep";
 import styled from "styled-components";
 
 export default function Footer() {
-  const { isFirstStep, isLastStep, routePrevStep, routeNextStep, routeToStep } = useSignUpStep();
-  const { isAllValid, firstInvalidField, startValidate, onValidate } = useValidatorForm();
+  const { isFirstStep, isLastStep, isRightBeforeLastStep, routePrevStep, routeNextStep, routeToStep } = useSignUpStep();
+  const { isAllValid, firstInvalidField, allFieldData, startValidate } = useValidatorForm();
+
+  const isHideFooter = isLastStep;
 
   const handleClickNext = () => {
     if (!isAllValid) {
       routeToStep(firstInvalidField?.key.split('-')[1]);
       startValidate();
     }
-    else routeNextStep();
+    else {
+      if (isRightBeforeLastStep) console.log('POST DATA!', allFieldData);
+      routeNextStep();
+    }
   }
+
+  if (isHideFooter) return null;
 
   return (
     <FooterContainer>

@@ -5,7 +5,7 @@ import PasswordInputWithConfirm from "../shared/input/PasswordInputWithConfirm";
 
 const PasswordContents = () => {
   const { value, handleChangeValue, handleChangeCustomError, fieldProps } = useValidatorField<string>('signup-password');
-  console.log(fieldProps);
+  
   return (
     <PasswordInputWithConfirm
       value={value}

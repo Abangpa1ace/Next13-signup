@@ -1,7 +1,5 @@
 "use client";
 
-import Footer from "@/components/shared/Footer";
-import Header from "@/components/shared/Header";
 import GlobalStyle from "@/styles/GlobalStyle";
 import defaultTheme from "@/styles/theme";
 import { PropsWithChildren } from 'react';
@@ -18,9 +16,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
         <ThemeProvider theme={defaultTheme}>
           <GlobalStyle />
           <Main>
-            <Header />
             {children}
-            <Footer />
           </Main>
         </ThemeProvider>
       </RecoilRoot>

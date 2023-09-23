@@ -4,11 +4,15 @@ import styled from "styled-components";
 
 export default function Header() {
   return (
-    <HeaderContainer>가입하기</HeaderContainer>
+    <HeaderContainer>회원 가입</HeaderContainer>
   )
 }
 
 const HeaderContainer = styled.header`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

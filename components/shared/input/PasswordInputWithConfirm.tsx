@@ -1,5 +1,5 @@
 import { ValidatorChangeCustomError, ValidatorFieldProps } from "@/types/shared/validator";
-import { isPassword } from "@/utils/shared/validator";
+import { isPassword, required } from "@/utils/shared/validator";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -16,7 +16,7 @@ interface PasswordConfirmProps extends ValidatorFieldProps, PasswordInputProps {
 const PasswordInputWithConfirm = ({ 
     passwordTitle = '비밀번호',
     passwordConfirmTitle = '비밀번호 확인',
-    invalidator = isPassword,
+    invalidator,
     setCustomError,
     isValid,
     invalidMessage,
@@ -25,10 +25,10 @@ const PasswordInputWithConfirm = ({
   }: PasswordConfirmProps) => {
   const { value: password } = passwordInputProps;
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
-  const passwordConfirmMessage = invalidator(passwordConfirm) || (password !== passwordConfirm && '비밀번호가 일치하지 않습니다') || '';
+  const passwordConfirmMessage = required(passwordConfirm) || isPassword(passwordConfirm) ||invalidator?.(passwordConfirm) || (password !== passwordConfirm && '비밀번호가 일치하지 않습니다') || '';
 
   useEffect(() => {
-    setCustomError(!passwordConfirmMessage, invalidMessage, true, false);
+    setCustomError(!passwordConfirmMessage, invalidMessage, false);
   }, [password, passwordConfirmMessage]);
 
   return (

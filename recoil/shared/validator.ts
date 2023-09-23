@@ -7,7 +7,7 @@ export const validatorFieldDataState = atomFamily<ValidatorFieldData<any>, Valid
     key,
     value: null,
     isValid: false,
-    invalidMessage: '',
+    invalidMessage: '값을 입력해주세요',
   })
 })
 
