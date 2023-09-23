@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 export default function Footer() {
   const { isFirstStep, isLastStep, isRightBeforeLastStep, routePrevStep, routeNextStep, routeToStep } = useSignUpStep();
-  const { isAllValid, firstInvalidField, allFieldData, startValidate } = useValidatorForm();
+  const { isAllValid, firstInvalidField, allFieldData, startValidate, resetAllFields } = useValidatorForm();
 
   const isHideFooter = isLastStep;
 
@@ -16,7 +16,10 @@ export default function Footer() {
       startValidate();
     }
     else {
-      if (isRightBeforeLastStep) console.log('POST DATA!', allFieldData);
+      if (isRightBeforeLastStep) {
+        console.log('POST DATA!', allFieldData);
+        resetAllFields();
+      }
       routeNextStep();
     }
   }

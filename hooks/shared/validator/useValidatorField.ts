@@ -4,19 +4,22 @@ import { validatorFieldDataState, validatorFieldKeysState, validatorOnValidateSt
 import { ValidatorChangeCustomError, ValidatorFieldData, ValidatorFieldProps, ValidatorKey } from "@/types/shared/validator";
 import { validatorChecker } from "@/utils/shared/validator";
 import { useEffect, useMemo } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 
 interface Options {
   removeKeyOnUnmount?: boolean;
+  removeKeyOnPagehide?: boolean;
 }
 
 const useValidatorField = <T>(key: ValidatorKey, {
-  removeKeyOnUnmount = false
+  removeKeyOnUnmount = false,
+  removeKeyOnPagehide = true,
 }: Options = {}) => {
   const setFieldKeys = useSetRecoilState(validatorFieldKeysState);
   const [onValidate, setOnValidate] = useRecoilState(validatorOnValidateState);
   // fieldData: key, value, isValid, invalidMessage
   const [fieldData, setFieldData] = useRecoilState<ValidatorFieldData<T>>(validatorFieldDataState(key));
+  const resetFieldData = useResetRecoilState(validatorFieldDataState(key));
 
   const fieldProps: ValidatorFieldProps = useMemo(() => ({
     ...fieldData,
@@ -46,13 +49,22 @@ const useValidatorField = <T>(key: ValidatorKey, {
     if (triggerValidate) setOnValidate(true);
   }
 
+  const resetValidatorField = () => {
+    resetFieldData();
+    setFieldKeys(fieldKeys => fieldKeys.filter(fieldKey => fieldKey !== key));
+  }
+
   useEffect(() => {
     setFieldKeys(fieldKeys => fieldKeys.indexOf(key) === -1 ? [...fieldKeys, key] : fieldKeys);
 
     return () => {
-      if (removeKeyOnUnmount) setFieldKeys(fieldKeys => fieldKeys.filter(fieldKey => fieldKey !== key));
+      if (removeKeyOnUnmount) resetValidatorField();
     }
   }, []); 
+
+  window.onpagehide = () => {
+    if (removeKeyOnPagehide) resetValidatorField();
+  }
 
   return {
     ...fieldData,
