@@ -1,4 +1,9 @@
-import { validatorAllFieldDataState, validatorAllValidState, validatorFieldKeysState, validatorOnValidateState } from "@/recoil/shared/validator";
+import {
+  validatorAllFieldDataState,
+  validatorAllValidState,
+  validatorFieldKeysState,
+  validatorOnValidateState,
+} from "@/recoil/shared/validator";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
 const useValidatorForm = () => {
@@ -11,9 +16,9 @@ const useValidatorForm = () => {
     onValidate,
     ...allValidateCheck,
     allFieldData,
-    startValidate: () => setOnValidate(true),
+    startValidate: () => setOnValidate(false),
     resetAllFields,
-  }
-}
+  };
+};
 
 export default useValidatorForm;
