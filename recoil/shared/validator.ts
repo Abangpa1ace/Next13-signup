@@ -32,7 +32,7 @@ export const validatorAllValidState = selector<ValidatorAllValid>({
       invalidFields,
       firstInvalidField: invalidFields[0],
     }
-  }
+  },
 })
 
 export const validatorAllFieldDataState = selector<ValidatorFieldData<any>[]>({
